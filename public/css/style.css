@@ -7,6 +7,7 @@
   margin-top: -7px; }
 
 a:hover {
-  color: #43AE8D; }
+  color: #43AE8D !important;
+  text-shadow: none !important; }
 
 /*# sourceMappingURL=style.css.map */

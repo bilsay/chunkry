@@ -1,3 +1,5 @@
+$mainColor: #43AE8D;
+
 .navbar-fixed-top {
 	background: #FFFFFF;
 	border: none;
@@ -9,5 +11,6 @@
  }
 
  a:hover {
- 	color: #43AE8D;
+ 	color: $mainColor !important;
+ 	text-shadow: none !important;
  }
