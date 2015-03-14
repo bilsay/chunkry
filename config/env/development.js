@@ -2,8 +2,8 @@
 
 module.exports = {
 	db: {
-		//uri: 'mongodb://localhost/mean-dev',
-		uri: 'mongodb://bilsay:kafkaf35@ds033380.mongolab.com:33380/heroku_app34691828',
+		uri: 'mongodb://localhost/mean-dev',
+		//uri: 'mongodb://bilsay:kafkaf35@ds033380.mongolab.com:33380/heroku_app34691828',
 		options: {
 			user: '',
 			pass: ''

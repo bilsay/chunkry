@@ -8,6 +8,7 @@ module.exports = function(grunt) {
 		clientViews: ['public/modules/**/views/**/*.html'],
 		clientJS: ['public/js/*.js', 'public/modules/**/*.js'],
 		clientCSS: ['public/modules/**/*.css'],
+		clientSass: ['public/css/{,*/}*.{scss,sass}'],
 		mochaTests: ['app/tests/**/*.js']
 	};
 
@@ -44,6 +45,13 @@ module.exports = function(grunt) {
 			clientCSS: {
 				files: watchFiles.clientCSS,
 				tasks: ['csslint'],
+				options: {
+					livereload: true
+				}
+			},
+			sass: {
+				files: watchFiles.clientSass,
+				tasks: ['sass:development'],
 				options: {
 					livereload: true
 				}
@@ -86,6 +94,30 @@ module.exports = function(grunt) {
 				}
 			}
 		},
+		/**
+		 * Sass
+		 */
+		sass: {
+		 	development: {
+			  files: {
+				'public/css/style.css': 'public/css/{,*/}*.{scss,sass}'
+				//'public/css/style.css': 'public/css/style.scss',
+				//'public/css/bootstrap.css': 'public/lib/bootstrap-sass-official/assets/stylesheets/bootstrap{,*/}*.{scss,sass}' 
+			  }
+		  	},
+			production: {
+				options: {
+					  style: 'expanded',
+					  compass: false
+			   	},
+				files: {
+					'public/css/style.css': 'public/css/{,*/}*.{scss,sass}'
+					//'public/css/style.css': 'public/css/style.scss',
+					//'public/css/bootstrap.css': 'public/lib/bootstrap-sass-official/assets/stylesheets/bootstrap{,*/}*.{scss,sass}' 
+				  }
+			}
+		},
+
 		nodemon: {
 			dev: {
 				script: 'server.js',
@@ -163,6 +195,8 @@ module.exports = function(grunt) {
 
 	// Default task(s).
 	grunt.registerTask('default', ['lint', 'concurrent:default']);
+	//grunt.registerTask('default', ['lint', 'sass:dev', 'concurrent:default']);
+	grunt.registerTask('default', ['lint', 'sass:development', 'concurrent:default']);
 
 	// Debug task.
 	grunt.registerTask('debug', ['lint', 'concurrent:debug']);
@@ -180,4 +214,8 @@ module.exports = function(grunt) {
 	grunt.registerTask('test', ['test:server', 'test:client']);
 	grunt.registerTask('test:server', ['env:test', 'mochaTest']);
 	grunt.registerTask('test:client', ['env:test', 'karma:unit']);
+
+	// change the tasks in the list to your production tasks
+	grunt.registerTask('heroku', ['compass:dist', 'autoprefixer', 'imagemin']);
+
 };
