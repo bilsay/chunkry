@@ -19,7 +19,7 @@ module.exports = {
 		}
 	},
 	app: {
-		title: 'chunry - chunks on your mind.'
+		title: 'chunkry - chunks on your mind'
 	},
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || 'APP_ID',
