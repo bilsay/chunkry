@@ -22,13 +22,13 @@ module.exports = {
 		title: 'chunkry - chunks on your mind'
 	},
 	facebook: {
-		clientID: process.env.FACEBOOK_ID || 'APP_ID',
-		clientSecret: process.env.FACEBOOK_SECRET || 'APP_SECRET',
+		clientID: process.env.FACEBOOK_ID || '831763046898407',
+		clientSecret: process.env.FACEBOOK_SECRET || '3c36ce06c2dcc16203c61610d0428cbd',
 		callbackURL: '/auth/facebook/callback'
 	},
 	twitter: {
-		clientID: process.env.TWITTER_KEY || 'CONSUMER_KEY',
-		clientSecret: process.env.TWITTER_SECRET || 'CONSUMER_SECRET',
+		clientID: process.env.TWITTER_KEY || 'O4UCTs74pRY86qqQpfcGunH3B',
+		clientSecret: process.env.TWITTER_SECRET || 'pS2e9dNpeC15BNJYHWElWdQ5gKelmLzUF9qX0mf7rpwrH4BGrT',
 		callbackURL: '/auth/twitter/callback'
 	},
 	google: {

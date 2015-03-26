@@ -1,8 +1,25 @@
+$mainBackgroundColor: #F4F5F6;
+$mainForegroundColor: #FFFFFF;
+$mainBorderColor: #E9E9E9;
 $mainColor: #43AE8D;
 
+@mixin foreground-item {
+	
+	background: $mainForegroundColor;
+	border: 1px solid $mainBorderColor;
+}
+
+body {
+	background-color: $mainBackgroundColor;
+}
+
 .navbar-fixed-top {
-	background: #FFFFFF;
+	background: $mainForegroundColor;
 	border: none;
+}
+
+.jumbotron {
+	@include foreground-item;
 }
 
 .navbar-brand > img {
@@ -10,6 +27,10 @@ $mainColor: #43AE8D;
   margin-top: -7px;
  }
 
+ a {
+ 	color: $mainColor;
+ }
+ 
  a:hover {
  	color: $mainColor !important;
  	text-shadow: none !important;

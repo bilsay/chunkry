@@ -22,7 +22,8 @@ var fs = require('fs'),
 	flash = require('connect-flash'),
 	config = require('./config'),
 	consolidate = require('consolidate'),
-	path = require('path');
+	path = require('path'),
+	seo = require('mean-seo');
 
 module.exports = function(db) {
 	// Initialize express app
@@ -117,6 +118,13 @@ module.exports = function(db) {
 
 	// connect flash for flash messages
 	app.use(flash());
+
+	// mean-seo
+	app.use(seo({
+	    cacheClient: 'disk', // Can be 'disk' or 'redis'
+	    //redisURL: 'redis://:password@hostname:port', // If using redis, optionally specify server credentials
+	    cacheDuration: 2 * 60 * 60 * 24 * 1000, // In milliseconds for disk cache
+	}));
 
 	// Globbing routing files
 	config.getGlobbedFiles('./app/routes/**/*.js').forEach(function(routePath) {

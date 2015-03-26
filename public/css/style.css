@@ -1,10 +1,20 @@
+body {
+  background-color: #F4F5F6; }
+
 .navbar-fixed-top {
   background: #FFFFFF;
   border: none; }
 
+.jumbotron {
+  background: #FFFFFF;
+  border: 1px solid #E9E9E9; }
+
 .navbar-brand > img {
   height: 40px;
   margin-top: -7px; }
+
+a {
+  color: #43AE8D; }
 
 a:hover {
   color: #43AE8D !important;
