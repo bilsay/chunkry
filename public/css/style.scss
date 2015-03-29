@@ -2,6 +2,7 @@ $mainBackgroundColor: #F4F5F6;
 $mainForegroundColor: #FFFFFF;
 $mainBorderColor: #E9E9E9;
 $mainColor: #43AE8D;
+$mainTextColor: #5A5A5A;
 
 @mixin foreground-item {
 	
@@ -9,29 +10,67 @@ $mainColor: #43AE8D;
 	border: 1px solid $mainBorderColor;
 }
 
+/*CORE*/
+
 body {
 	background-color: $mainBackgroundColor;
+	color: $mainTextColor;
 }
+
+a {
+ 	color: $mainColor;
+
+ 	&:hover{
+		background: none !important;
+	 	color: $mainColor !important;
+	 	text-shadow: none !important;
+    }
+ }
+
+/*END OF CORE*/
+
+/*TYPE*/
+
+// Setup the function in your functions or helpers files, wherever you keep these bits.
+@function headings($from:1, $to:6) {
+    @if $from == $to {
+        @return 'h#{$from}';
+    } @else {
+        @return 'h#{$from},' + headings($from+1, $to);
+    }
+}
+	
+// Then call it with the rules/styles you want wherever you want (As long as the file/include has access to the above function of course).
+#{headings(1,6)} {
+  color: $mainColor;
+}
+
+/*END OF TYPE*/
+
+/*BOOTSTRAP*/
 
 .navbar-fixed-top {
 	background: $mainForegroundColor;
-	border: none;
+	border-color: $mainBorderColor;
 }
 
-.jumbotron {
-	@include foreground-item;
+.navbar-inverse .navbar-nav > li > a,
+.navbar-inverse .navbar-brand {
+	
+	color: $mainTextColor;
 }
 
 .navbar-brand > img {
-  height: 40px;
-  margin-top: -7px;
- }
+	height: 40px;
+	margin-top: -10px;
+	display: inline;
+}
 
- a {
- 	color: $mainColor;
- }
- 
- a:hover {
- 	color: $mainColor !important;
- 	text-shadow: none !important;
- }
+/*END OF BOOTSTRAP*/
+
+/*CHUNK*/
+.chunk {
+	
+	border-color: $mainBorderColor;
+}
+/*END OF CHUNK*/

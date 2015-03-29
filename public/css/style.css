@@ -1,23 +1,40 @@
+/*CORE*/
 body {
-  background-color: #F4F5F6; }
-
-.navbar-fixed-top {
-  background: #FFFFFF;
-  border: none; }
-
-.jumbotron {
-  background: #FFFFFF;
-  border: 1px solid #E9E9E9; }
-
-.navbar-brand > img {
-  height: 40px;
-  margin-top: -7px; }
+  background-color: #F4F5F6;
+  color: #5A5A5A; }
 
 a {
   color: #43AE8D; }
+  a:hover {
+    background: none !important;
+    color: #43AE8D !important;
+    text-shadow: none !important; }
 
-a:hover {
-  color: #43AE8D !important;
-  text-shadow: none !important; }
+/*END OF CORE*/
+/*TYPE*/
+h1, h2, h3, h4, h5, h6 {
+  color: #43AE8D; }
+
+/*END OF TYPE*/
+/*BOOTSTRAP*/
+.navbar-fixed-top {
+  background: #FFFFFF;
+  border-color: #E9E9E9; }
+
+.navbar-inverse .navbar-nav > li > a,
+.navbar-inverse .navbar-brand {
+  color: #5A5A5A; }
+
+.navbar-brand > img {
+  height: 40px;
+  margin-top: -10px;
+  display: inline; }
+
+/*END OF BOOTSTRAP*/
+/*CHUNK*/
+.chunk {
+  border-color: #E9E9E9; }
+
+/*END OF CHUNK*/
 
 /*# sourceMappingURL=style.css.map */

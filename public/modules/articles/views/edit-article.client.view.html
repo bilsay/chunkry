@@ -30,6 +30,11 @@
 					<strong data-ng-bind="error"></strong>
 				</div>
 			</fieldset>
+
+			<tags-input ng-model="tags">
+				<auto-complete source="loadTags($query)"></auto-complete>
+			</tags-input>
+			<p>Model: {{tags}}</p>
 		</form>
 	</div>
 </section>

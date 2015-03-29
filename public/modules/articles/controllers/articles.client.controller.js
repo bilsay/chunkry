@@ -3,6 +3,7 @@
 // Articles controller
 angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles',
 	function($scope, $stateParams, $location, Authentication, Articles) {
+
 		$scope.authentication = Authentication;
 
 		// Create new Article
@@ -63,6 +64,14 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 			$scope.article = Articles.get({
 				articleId: $stateParams.articleId
 			});
+		};
+
+		$scope.loadTags = function(query) {
+			return [
+				{ text: 'Tag1' },
+				{ text: 'Tag2' },
+				{ text: 'Tag3' }
+			];
 		};
 	}
 ]);

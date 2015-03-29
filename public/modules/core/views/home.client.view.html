@@ -1,14 +1,13 @@
 <section data-ng-controller="HomeController">
 	
 	<div class="row">
-		<div class="col-md-2 col-md-offset-0 col-sm-2 col-sm-offset-0 col-xs-12">
-			<img alt="MEAN.JS" class="img-responsive text-center hidden-xs" src="modules/core/img/brand/chunkry.png" />
-
-			<p class="lead">
-				Chunks on your mind.
-			</p>
+		<div id="chunk-control" class="col-md-2 col-md-offset-0 col-sm-2 col-sm-offset-0 col-xs-12 hidden-xs">
+			<img alt="MEAN.JS" class="img-responsive text-center" src="modules/core/img/brand/chunkry.png" />
 		</div>
 
+		<div class="col-md-10 col-sm-10">
+			<div data-ng-include="'/modules/articles/views/list-articles.client.view.html'"></div>
+		</div>
 	</div>
 
 	<br>Wait for it.

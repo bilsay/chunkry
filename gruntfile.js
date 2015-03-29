@@ -195,7 +195,6 @@ module.exports = function(grunt) {
 
 	// Default task(s).
 	grunt.registerTask('default', ['lint', 'concurrent:default']);
-	//grunt.registerTask('default', ['lint', 'sass:dev', 'concurrent:default']);
 	grunt.registerTask('default', ['lint', 'sass:development', 'concurrent:default']);
 
 	// Debug task.
