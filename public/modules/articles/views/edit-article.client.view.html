@@ -1,6 +1,6 @@
 <section data-ng-controller="ArticlesController" data-ng-init="findOne()">
 	<div class="page-header">
-		<h1>Edit Article</h1>
+		<h1>Edit Chunk</h1>
 	</div>
 	<div class="col-md-12">
 		<form name="articleForm" class="form-horizontal" data-ng-submit="update(articleForm.$valid)" novalidate>
@@ -31,10 +31,9 @@
 				</div>
 			</fieldset>
 
-			<tags-input ng-model="tags">
+			<tags-input ng-model="article.tags">
 				<auto-complete source="loadTags($query)"></auto-complete>
 			</tags-input>
-			<p>Model: {{tags}}</p>
 		</form>
 	</div>
 </section>

@@ -23,7 +23,13 @@ var fs = require('fs'),
 	config = require('./config'),
 	consolidate = require('consolidate'),
 	path = require('path'),
-	seo = require('mean-seo');
+	seo = require('mean-seo'),
+    aws = require('aws-sdk'),
+    _ = require('underscore-node');
+
+var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
+var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
+var S3_BUCKET = process.env.S3_BUCKET;
 
 module.exports = function(db) {
 	// Initialize express app

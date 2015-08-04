@@ -11,7 +11,8 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 			// Create new Article object
 			var article = new Articles({
 				title: this.title,
-				content: this.content
+				content: this.content,
+				tags: this.tags
 			});
 
 			// Redirect after save
@@ -21,6 +22,8 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 				// Clear form fields
 				$scope.title = '';
 				$scope.content = '';
+				$scope.tags = [];
+				
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
@@ -66,12 +69,48 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 			});
 		};
 
-		$scope.loadTags = function(query) {
-			return [
-				{ text: 'Tag1' },
-				{ text: 'Tag2' },
-				{ text: 'Tag3' }
-			];
-		};
+		$scope.tags = [
+            { text: 'just' },
+            { text: 'some' },
+            { text: 'cool' },
+            { text: 'tags' }
+        ];
+
+ 		$scope.loadTagCloudItems = function(query) {
+
+ 			var articles = Articles.query({}, function (articles) {
+
+	 			var tagCloudItems = {};
+
+	 			_.each (articles, function (article) {
+	 				
+	 				_.each (article.tags, function (tag) {
+
+	 					if (!tagCloudItems[tag.text]) {
+	 						tagCloudItems[tag.text] = 0;
+	 					} 
+
+	 					tagCloudItems[tag.text]++;
+	 				});
+	 			});
+
+	            $scope.tagCloudItems = tagCloudItems;
+ 			});
+        };
+    
+        $scope.loadTags = function(query) {
+            return $http.get('/tags?query=' + query);
+        };
+
+         angular.element(document).ready(function () {
+
+         	setTimeout(function () {
+
+	    	   $(".tag-cloud").tx3TagCloud({
+					multiplier: 2
+				});
+         	}, 1000);
+
+    	 });
 	}
 ]);

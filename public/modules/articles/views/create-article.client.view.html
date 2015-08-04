@@ -1,6 +1,6 @@
 <section data-ng-controller="ArticlesController">
 	<div class="page-header">
-		<h1>New Article</h1>
+		<h1>New Chunk</h1>
 	</div>
 	<div class="col-md-12">
 		<form name="articleForm" class="form-horizontal" data-ng-submit="create()" novalidate>
@@ -24,6 +24,11 @@
 					<strong data-ng-bind="error"></strong>
 				</div>
 			</fieldset>
+				
+			<tags-input ng-model="tags">
+				<auto-complete source="loadTags($query)"></auto-complete>
+			</tags-input>
+
 		</form>
 	</div>
 </section>

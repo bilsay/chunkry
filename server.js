@@ -5,7 +5,13 @@
 var init = require('./config/init')(),
 	config = require('./config/config'),
 	mongoose = require('mongoose'),
-	chalk = require('chalk');
+	chalk = require('chalk'),
+    aws = require('aws-sdk'),
+    _ = require('underscore');
+
+var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
+var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
+var S3_BUCKET = process.env.S3_BUCKET;
 
 /**
  * Main application entry file.

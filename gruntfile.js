@@ -4,9 +4,19 @@ module.exports = function(grunt) {
 	// Unified Watch Object
 	var watchFiles = {
 		serverViews: ['app/views/**/*.*'],
-		serverJS: ['gruntfile.js', 'server.js', 'config/**/*.js', 'app/**/*.js', '!app/tests/'],
+		serverJS: [
+			'gruntfile.js', 
+			'server.js', 
+			'config/**/*.js', 
+			'app/**/*.js', 
+			'!app/tests/', 
+			'node_modules/underscore-node/**/*.js',
+			'node_modules/tagcloud/**/*.js'
+			],
 		clientViews: ['public/modules/**/views/**/*.html'],
-		clientJS: ['public/js/*.js', 'public/modules/**/*.js'],
+		clientJS: [
+			'public/js/*.js', 
+			'public/modules/**/*.js'],
 		clientCSS: ['public/modules/**/*.css'],
 		clientSass: ['public/css/{,*/}*.{scss,sass}'],
 		mochaTests: ['app/tests/**/*.js']
@@ -196,6 +206,7 @@ module.exports = function(grunt) {
 	// Default task(s).
 	grunt.registerTask('default', ['lint', 'concurrent:default']);
 	grunt.registerTask('default', ['lint', 'sass:development', 'concurrent:default']);
+
 
 	// Debug task.
 	grunt.registerTask('debug', ['lint', 'concurrent:debug']);

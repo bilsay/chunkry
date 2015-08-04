@@ -1,40 +1,153 @@
+/*RESET*/
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after {
+  content: '';
+  content: none; }
+
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/*END OF RESET*/
 /*CORE*/
 body {
-  background-color: #F4F5F6;
-  color: #5A5A5A; }
+  background: #F9F9F9;
+  color: #768298; }
 
 a {
-  color: #43AE8D; }
+  color: #768298; }
   a:hover {
     background: none !important;
-    color: #43AE8D !important;
+    color: #E67886 !important;
     text-shadow: none !important; }
 
 /*END OF CORE*/
 /*TYPE*/
 h1, h2, h3, h4, h5, h6 {
-  color: #43AE8D; }
+  color: #E67886; }
 
 /*END OF TYPE*/
 /*BOOTSTRAP*/
+.list-group {
+  box-shadow: none; }
+
 .navbar-fixed-top {
-  background: #FFFFFF;
-  border-color: #E9E9E9; }
+  background: #ffffff;
+  border-color: #ffffff; }
 
 .navbar-inverse .navbar-nav > li > a,
 .navbar-inverse .navbar-brand {
-  color: #5A5A5A; }
+  color: #768298; }
 
 .navbar-brand > img {
   height: 40px;
   margin-top: -10px;
   display: inline; }
 
+a.list-group-item {
+  color: #768298; }
+
+#chunk-feed .list-group-item-heading {
+  color: #E67886; }
+
+.page-header {
+  border: none; }
+
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .active > a:focus {
+  background: #E67886; }
+
+.navbar-inverse .navbar-nav > .open > a,
+.navbar-inverse .navbar-nav > .active > a {
+  background: #E67886; }
+
+.navbar-inverse .navbar-nav > .open > a,
+.navbar-inverse .navbar-nav > .open > a:hover,
+.navbar-inverse .navbar-nav > .open > a:focus {
+  background: #768298; }
+
+.btn {
+  background: #E67886;
+  border: none;
+  color: #f0f0f0;
+  text-shadow: none;
+  box-shadow: none; }
+
+tags-input .tags .tag-item {
+  background: #768298;
+  color: #ffffff; }
+  tags-input .tags .tag-item .remove-button {
+    color: #E67886; }
+
+.alert-warning {
+  background: #E67886;
+  color: #ffffff; }
+
 /*END OF BOOTSTRAP*/
 /*CHUNK*/
+#chunk-control {
+  background: #FFFFFF;
+  border: 1px solid #E9E9E9; }
+
+#chunk-feed {
+  margin-top: 1em; }
+
 .chunk {
   border-color: #E9E9E9; }
 
+.chunk-edit-buttons .btn {
+  font-size: 16px; }
+
 /*END OF CHUNK*/
+.transparent-bg:after {
+  background: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 55px;
+  width: 100%;
+  opacity: 0.7;
+  z-index: -1; }
+
+/*Tag Cloud*/
+.tag-cloud {
+  text-align: center; }
+
+.tag-cloud-item {
+  display: inline-block; }
+
+.tag-cloud-item a {
+  background: none;
+  border: none; }
+
+/*End of Tag Cloud*/
 
 /*# sourceMappingURL=style.css.map */
