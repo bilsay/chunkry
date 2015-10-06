@@ -1,27 +1,45 @@
-<section data-ng-controller="ArticlesController" data-ng-init="loadTagCloudItems()">
+<section id="profile-info"
+		 data-ng-controller="ArticlesController" 
+		 data-ng-init="loadTagCloudItems()"
+		 class="col-md-3">
+
+<h1 data-ng-show="authentication.user">
+	<span data-ng-bind="authentication.user.displayName"></span>
+</h1>
+
 <ul class="tag-cloud list-group">
-	<li class="tag-cloud-item" data-ng-repeat="(key, value) in tagCloudItems" data-weight="{{value}}">
-		<a data-ng-href="#!/articles/" class="chunk list-group-item">
-			{{key}}
+	<li class="tag-cloud-item" data-ng-repeat="tagCloudItem in tagCloudItems" data-weight="{{tagCloudItem[1]}}">
+		<a data-ng-href="#!/articles/tagged/?tag={{tagCloudItem[0]}}" class="chunk list-group-item">
+			{{tagCloudItem[0]}}
 		</a>
 	</li>
 </ul>
 </section>
 
-<section data-ng-controller="ArticlesController" data-ng-init="find()">
-	<div class="list-group">
-		<a data-ng-repeat="article in articles" data-ng-href="#!/articles/{{article._id}}" class="chunk list-group-item">
-			<h4 class="list-group-item-heading" data-ng-bind="article.title"></h4>
-			<p class="list-group-item-text" data-ng-bind="article.content"></p>
-			<small class="list-group-item-text">
-				Posted on
-				<span data-ng-bind="article.created | date:'mediumDate'"></span>
-				by
-				<span data-ng-bind="article.user.displayName"></span>
-			</small>
-		</a>
-	</div>
-	<div class="alert alert-warning text-center" data-ng-if="articles.$resolved && !articles.length">
-		No chunks yet, <a href="/#!/articles/create">add one</a>?
+<section data-ng-controller="ArticlesController" 
+		 data-ng-init="find(tag)"
+		 class="col-md-9">
+	<div id="chunk-feed">
+			<div class="list-group">
+				<a data-ng-repeat="article in articles" 
+				   data-ng-href="#!/articles/{{article._id}}" 
+				   class="chunk list-group-item col-md-12 col-sm-12">
+					<h4 class="list-group-item-heading" data-ng-bind="article.title"></h4>
+					<p class="list-group-item-text" data-ng-bind="article.content"></p>
+					<small class="list-group-item-text">
+						Posted on
+						<span data-ng-bind="article.created | date:'mediumDate'"></span>
+						by
+						<span data-ng-bind="article.user.displayName"></span>
+					</small>
+					<img ng-src="{{article.imageUrl}}" id="photo-id" width="40" height="40"/>
+					<ol class="chunk-readonly-tags"> 
+						<li ng-repeat="tag in article.tags" class="chunk-readonly-tag">{{tag.text}}</li>
+					</ol>
+				</a>
+			</div>
+			<div class="alert alert-warning text-center" data-ng-if="articles.$resolved && !articles.length">
+				No chunks yet, <a href="/#!/articles/create">add one</a>?
+			</div>
 	</div>
 </section>

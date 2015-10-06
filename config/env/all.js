@@ -45,6 +45,7 @@ module.exports = {
 			css: [
 				'public/lib/bootstrap/dist/css/bootstrap.css',
 				'public/lib/bootstrap/dist/css/bootstrap-theme.css',
+				'public/lib/tx3-tag-cloud/src/tx3-tag-cloud.css'
 			],
 			js: [
 				'public/lib/angular/angular.js',
@@ -57,7 +58,10 @@ module.exports = {
 				'public/lib/underscore/underscore-min.js',
 				'public/lib/angular-underscore-module/angular-underscore-module.js',
 				'public/lib/jquery/dist/jquery.min.js',
-				'public/lib/tx3-tag-cloud/build/jquery.tx3-tag-cloud.min.js'
+				'public/lib/tx3-tag-cloud/build/jquery.tx3-tag-cloud.min.js',
+				'public/lib/ng-file-upload/FileAPI.min.js', 
+	            'public/lib/ng-file-upload/ng-file-upload-shim.min.js',
+	            'public/lib/ng-file-upload/ng-file-upload.min.js'
 			]
 		},
 		css: [

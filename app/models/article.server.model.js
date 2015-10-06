@@ -29,6 +29,10 @@ var ArticleSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'User'
 	},
+	imageUrl: {
+		type: String,
+		default: ''
+	},
 	tags: []
 });
 

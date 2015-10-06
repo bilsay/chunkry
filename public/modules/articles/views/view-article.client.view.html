@@ -19,4 +19,11 @@
 		</em>
 	</small>
 	<p class="lead" data-ng-bind="article.content"></p>
+
+	<img ng-src="{{article.imageUrl}}" id="photo-id" width="200" height="200"/>
+	
+	<ol class="chunk-readonly-tags"> 
+		<li ng-repeat="tag in article.tags" class="chunk-readonly-tag">{{tag.text}}</li>
+	</ol>
+
 </section>

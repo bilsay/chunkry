@@ -12,20 +12,32 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label" for="content">Content</label>
+					<label class="control-label" for="content">Description</label>
 					<div class="controls">
-						<textarea name="content" data-ng-model="content" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
+						<textarea name="content" data-ng-model="content" id="content" class="form-control" cols="30" rows="10" placeholder="Description"></textarea>
 					</div>
 				</div>
 				<div class="form-group">
-					<input type="submit" class="btn btn-default">
+					<label class="control-label" for="articleimage">Article Picture</label>
+					<div class="controls">
+						<input id="articleimage" 
+							   type="file" 
+							   ngf-select="uploadImage(image)"
+							   ng-model="image" name="file" accept="image/*"  required="">
+						<br/>
+						<img id="chunk-image" ng-show="imageUrl != null" ng-src="{{imageUrl}}" class="img-thumbnail" height="50" width="100">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<input id="create-chunk-button" type="submit" class="btn btn-default">
 				</div>
 				<div data-ng-show="error" class="text-danger">
 					<strong data-ng-bind="error"></strong>
 				</div>
 			</fieldset>
 				
-			<tags-input ng-model="tags">
+			<tags-input class="form-group" ng-model="tags">
 				<auto-complete source="loadTags($query)"></auto-complete>
 			</tags-input>
 

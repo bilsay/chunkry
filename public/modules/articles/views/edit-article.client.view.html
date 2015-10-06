@@ -24,6 +24,17 @@
 					</div>
 				</div>
 				<div class="form-group">
+					<label class="control-label" for="articleimage">Article Picture</label>
+					<div class="controls">
+						<input id="articleimage" 
+							   type="file" 
+							   ngf-select="uploadImage(image)"
+							   ng-model="image" name="file" accept="image/*"  required="">
+						<br/>
+						<img id="chunk-image" ng-show="article.imageUrl != null" ng-src="{{article.imageUrl}}" class="img-thumbnail" height="50" width="100">
+					</div>
+				</div>
+				<div class="form-group">
 					<input type="submit" value="Update" class="btn btn-default">
 				</div>
 				<div data-ng-show="error" class="text-danger">
@@ -31,7 +42,7 @@
 				</div>
 			</fieldset>
 
-			<tags-input ng-model="article.tags">
+			<tags-input class="form-group" ng-model="article.tags">
 				<auto-complete source="loadTags($query)"></auto-complete>
 			</tags-input>
 		</form>
