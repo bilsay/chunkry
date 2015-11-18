@@ -9,44 +9,80 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$timeout
 		$scope.authentication = Authentication;
 		$scope.invalidFiles = [];
 
-	/*	$scope.uploadPic = function(e, s){
-		    console.log(e.target.files[0]);
-		    $scope.image =e.target.files[0];
+		var addChunkTagHandlers = {
+
+			"book": function (chunk) {
+
+				$('#chunk-add-book-isbn').removeClass ('hide');
+			}
 		};
 
-		$scope.$watch('files', function (files) {
-			$scope.formUpload = false;
-			if (files != null) {
-			  if (!angular.isArray(files)) {
-			    $timeout(function () {
-			      $scope.files = files = [files];
-			    });
-			    return;
-			  }
-			  for (var i = 0; i < files.length; i++) {
-			    $scope.errorMsg = null;
-			    (function (f) {
-			      $scope.upload(f, true);
-			    })(files[i]);
-			  }
-			}
-		});*/
+		var removeChunkTagHandlers = {
 
-		function s3_uploadImage (file) {
-			s3_getSignedRequest (file);
+			"book": function (chunk) {
+
+				$('#chunk-add-book-isbn').addClass ('hide');
+			}
+		};
+
+		var processChunkTags = function (chunk) {
+
+			return _.each (chunk.tags, processSpecialChunkTag);
+		};
+
+		var addChunkTag = function (tag) {
+
+			var chunkTagHandler = addChunkTagHandlers[tag.text];
+
+			if (chunkTagHandler) {
+				chunkTagHandler ();
+			}
+		};
+
+		var removeChunkTag = function (tag) {
+
+			var chunkTagHandler = removeChunkTagHandlers[tag.text];
+
+			if (chunkTagHandler) {
+				chunkTagHandler ();
+			}
+		};
+
+		var getFileTypeCategory = function (fileType) {
+
+			if (!fileType) return;
+
+			if ((/(gif|jpg|jpeg|tiff|png)$/i).test(fileType)) {
+
+				return 'image';
+			} else if ((/(mp3|wav)$/i).test(fileType)) {
+
+				return 'audio';
+			}
+		};
+
+		var isAcceptableType = function (fileType) {
+
+			return (/(gif|jpg|jpeg|tiff|png|mp3|wav)$/i).test(fileType);
 		}
 
 		function s3_getSignedRequest (file){
 
 			var xhr = new XMLHttpRequest();
+			var fileTypeCategory = getFileTypeCategory (file.type);
 
-			xhr.open("GET", "/sign_s3?file_name="+file.name+"&file_type="+file.type);
+			if (!fileTypeCategory) return;
+
+			xhr.open("GET", "/sign_s3?file_name=" + file.name 
+								  + "&file_type=" + file.type 
+								  + "&file_type_category=" + fileTypeCategory
+								  + "&user_name=" + ($scope.authentication.user.username));
 
 			xhr.onreadystatechange = function(){
 			    if(xhr.readyState === 4){
 			        if(xhr.status === 200){
 			            var response = JSON.parse(xhr.responseText);
-			            s3_uploadFile(file, response.signed_request, response.url);
+			            s3_uploadFile(file, response.signed_request, response.url, fileTypeCategory);
 			        }
 			        else{
 			            console.log("Could not get signed URL.");
@@ -57,7 +93,7 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$timeout
 			xhr.send();
 		}
 
-		function s3_uploadFile (file, signed_request, url) {
+		function s3_uploadFile (file, signed_request, url, fileTypeCategory) {
 
 			var xhr = new XMLHttpRequest();
 			
@@ -66,15 +102,15 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$timeout
 
 			xhr.onload = function() {
 			    if (xhr.status === 200) {
-			    	$scope.imageUrl = url;
-			        $('#chunk-image').attr ('src', url)
-			        				 .removeClass('ng-hide');
-
-					$('#create-chunk-button').removeAttr ('disabled');
+			    	
+			    	$scope.article.fileUrl = url;
+			    	$scope.article.fileTypeCategory = fileTypeCategory;
+					saveArticle ($scope.article);
 			    }
 			};
 			
 			xhr.onerror = function() {
+
 			    console.log("Could not upload file.");
 			};
 
@@ -83,15 +119,21 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$timeout
 
 		var saveArticle = function (article) {
 
+			//processSpecialChunkTags (article);
+
 			article.$save (function (response) {
 
 				//$location.path('articles/' + response._id);
-
+				$location.path('articles/' + response._id);
 				// Clear form fields
+
+				$scope.isCreatedByUser = false;
 				$scope.title = '';
 				$scope.content = '';
 				$scope.tags = [];
-				$scope.imageUrl = null;
+				$scope.fileUrl = '';
+				$scope.fileTypeCategory = '';
+				$scope.article = null;
 				
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
@@ -102,13 +144,20 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$timeout
 		$scope.create = function() {
 
 			var article = new Articles({
+				isCreatedByUser: this.isCreatedByUser,
 				title: this.title,
 				content: this.content,
-				tags: this.tags,
-            	imageUrl: this.imageUrl
+				linkUrl: this.linkUrl,	
+				tags: this.tags
 			});
 
-			saveArticle (article);
+			if (this.file) {
+
+				$scope.article = article;
+				uploadFile (this.file);
+			} else {
+				saveArticle (article);
+			}
 		};
 
 		$scope.create2 = function(image) {
@@ -160,16 +209,49 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$timeout
 			});*/
 		};
 
-		$scope.uploadImage = function (image) {
+		var uploadFile = function (file) {
 
 			$('#create-chunk-button').attr ('disabled', true);
 
-			if (image) {
-				if ($scope.fileReaderSupported && image.type.indexOf('image') > -1) {
+			if (file) {
+				if ($scope.fileReaderSupported 
+					&& isAcceptableType(file.type)){
 				   
-					s3_uploadImage(image);
+					s3_getSignedRequest (file);
 				}	
 			}
+		};
+
+		$scope.generatePreview = function (file) {
+
+			if (file) {
+				if ($scope.fileReaderSupported 
+					&& isAcceptableType(file.type)){
+				   
+					var fileReader = new FileReader();
+					var fileTypeCategory = getFileTypeCategory(file.type);
+
+					fileReader.onload = function(fileLoadedEvent) 
+					{
+						$('#chunk-' + fileTypeCategory + '-preview').attr ('src', fileLoadedEvent.target.result)
+																	.show ();
+
+						//textAreaFileContents.innerHTML = fileLoadedEvent.target.result;
+					};
+
+					fileReader.readAsDataURL(file);
+				}	
+			}
+		};
+
+		$scope.tagAdded = function (tag) {
+
+			addChunkTag(tag);
+		};
+
+		$scope.tagRemoved = function (tag) {
+
+			removeChunkTag(tag);
 		};
 
 		// Remove existing Article
@@ -193,8 +275,8 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$timeout
 		$scope.update = function() {
 			var article = $scope.article;
 
-			if ($scope.imageUrl) {
-				article.imageUrl = 	$scope.imageUrl;
+			if ($scope.fileUrl) {
+				article.fileUrl = 	$scope.fileUrl;
 			}
 
 			article.$update(function() {
@@ -238,7 +320,9 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$timeout
 					$scope.articles = allArticles;
 				}	
 
+				_.sortBy($scope.articles, function(o) { return o.created; });
 
+				$scope.hasArticles = 0 != allArticles.length;
 			});
 			
 		};
@@ -252,7 +336,7 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$timeout
 		};
 
 		$scope.tags = [
-            { text: 'just' },
+      	    { text: 'just' },
             { text: 'some' },
             { text: 'cool' },
             { text: 'tags' }
@@ -302,7 +386,14 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$timeout
         };
 
         $scope.loadTags = function(query) {
-            return $http.get('/#!/articles/tags?query=' + query);
+
+        	//return $scope.tags;
+          // return $http.get('/#!/articles/tags?query=' + query);
+           return $http.get('/tags?query=' + query).then(function(response) { 
+
+            	console.log (response);
+            	return response.data;
+            });/**/
         };
 
          angular.element(document).ready(function () {

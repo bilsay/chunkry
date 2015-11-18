@@ -1,31 +1,49 @@
 <section data-ng-controller="ArticlesController">
 	<div class="page-header">
-		<h1>New Chunk</h1>
+		<h3>New Chunk</h3>
 	</div>
-	<div class="col-md-12">
+	<div class="chunk-create-edit col-md-12">
 		<form name="articleForm" class="form-horizontal" data-ng-submit="create()" novalidate>
 			<fieldset>
+
+				<div class="form-group">
+					<div class="controls">
+						<label class="checkbox-inline">
+							<input type="checkbox" name="isCreatedByUser" ng-model="articleForm.isCreatedByUser"> I created this
+						</label>
+					</div>
+				</div>
 				<div class="form-group" ng-class="{ 'has-error': articleForm.title.$dirty && articleForm.title.$invalid }">
-					<label class="control-label" for="title">Title</label>
 					<div class="controls">
 						<input name="title" type="text" data-ng-model="title" id="title" class="form-control" placeholder="Title" required>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label" for="content">Description</label>
 					<div class="controls">
-						<textarea name="content" data-ng-model="content" id="content" class="form-control" cols="30" rows="10" placeholder="Description"></textarea>
+						<input name="content" data-ng-model="linkUrl" id="link-url" class="form-control" cols="30" rows="10" placeholder="Link"></input>
 					</div>
 				</div>
-				<div class="form-group">
-					<label class="control-label" for="articleimage">Article Picture</label>
+				<div class="chunk-add-file form-group">
 					<div class="controls">
-						<input id="articleimage" 
+						<input id="chunk-file-input" 
 							   type="file" 
-							   ngf-select="uploadImage(image)"
-							   ng-model="image" name="file" accept="image/*"  required="">
+							   class="filestyle"
+							   data-buttonText="Find file"
+							   ngf-select="generatePreview(file)"
+							   ng-model="file" name="file" accept="image/*|audio/*"  required="">
 						<br/>
-						<img id="chunk-image" ng-show="imageUrl != null" ng-src="{{imageUrl}}" class="img-thumbnail" height="50" width="100">
+						<div ngf-thumbnail="file"
+							 ngf-size="{width: 20, height: 20, quality: 0.9}"
+							 ngf-as-background="boolean"></div>
+						<img ngf-thumbnail="file">
+						<audio id="chunk-audio-preview" controls ngf-src="file" class="chunk-file-preview"></audio>
+						<img id="chunk-image-preview" ng-src="{{fileUrl}}" class="img-thumbnail chunk-file-preview" height="50" width="100">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="controls">
+						<textarea name="content" data-ng-model="content" id="content" class="form-control" cols="30" rows="10" placeholder="Description"></textarea>
 					</div>
 				</div>
 
@@ -36,10 +54,24 @@
 					<strong data-ng-bind="error"></strong>
 				</div>
 			</fieldset>
-				
-			<tags-input class="form-group" ng-model="tags">
+			
+			<p class="text-info">Book, Song, Picture</p>	
+
+			<tags-input class="form-group" 
+				 		ng-model="tags"
+				 		add-on-paste="true"
+				 		on-tag-added="tagAdded($tag)"
+				 		on-tag-removed="tagRemoved($tag)"
+				 		min-tags="1"
+  						max-tags="5">
 				<auto-complete source="loadTags($query)"></auto-complete>
 			</tags-input>
+
+			<div id="chunk-add-book-isbn" class="form-group hide">
+				<div class="controls">
+					<input name="content" data-ng-model="isbn" id="isbn-url" class="form-control" cols="30" rows="10" placeholder="isbn"></input>
+				</div>
+			</div>	
 
 		</form>
 	</div>

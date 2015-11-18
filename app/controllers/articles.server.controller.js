@@ -10,31 +10,44 @@ var mongoose = require('mongoose'),
 	uuid = require('uuid'),	
 	fs = require('fs'),
 	_ = require('lodash'),
-    aws = require('aws-sdk');
+    aws = require('aws-sdk'),
+    similarity = require("similarity"),
+    ISBN = require('isbn').ISBN;
 
-	var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
-	var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
-	var S3_BUCKET = process.env.S3_BUCKET;
-	var S3_URL = process.env.S3_URL;
-	var S3_IMAGE_PREFIX = 'image';
-	var S3_IMAGE_URL = S3_URL + S3_BUCKET + '/' + S3_IMAGE_PREFIX + '/';
+	var AWS_ACCESS_KEY = "AKIAJCAFEOUECYVL6UZA";//process.env.AWS_ACCESS_KEY;
+	var AWS_SECRET_KEY = "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";//process.env.AWS_SECRET_KEY;
+	var S3_BUCKET = "chunkry";//process.env.S3_BUCKET;
+	var S3_URL = "https://s3-eu-west-1.amazonaws.com";//process.env.S3_URL;
 
 /**
  * Create a article with Upload
  */
+
+function getRelativeFilePath (options) {
+
+	return options.user_name + '/' 
+		 + options.file_type_category + '/' 
+	   	 + options.file_name;
+}
 
 exports.uploadToS3 = function (req, res) {
 
  	aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
 
     var s3 = new aws.S3();
+    var relativeFilePath = getRelativeFilePath (req.query);
+
     var s3_params = {
         Bucket: S3_BUCKET,
-        Key: S3_IMAGE_PREFIX + '/' + req.query.file_name,
+        Key: relativeFilePath,
         Expires: 60,
         ContentType: req.query.file_type,
         ACL: 'public-read'
     };
+
+    console.log (S3_BUCKET);
+    console.log (S3_URL + '/' + S3_BUCKET + '/' + relativeFilePath);
+    console.log (req.query);
 
     s3.getSignedUrl('putObject', s3_params, function(err, data) {
 
@@ -44,7 +57,7 @@ exports.uploadToS3 = function (req, res) {
         } else{
             var return_data = {
                 signed_request: data,
-                url: S3_IMAGE_URL + req.query.file_name
+                url: S3_URL + '/' + S3_BUCKET + '/' + relativeFilePath
                // url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/image/'+req.query.file_name
             };
             res.write(JSON.stringify(return_data));
@@ -226,6 +239,42 @@ exports.list = function(req, res) {
 			});
 		} else {
 			res.json(articles);
+		}
+	});
+};
+
+exports.getTags = function (req, res) {
+	
+	var isbn10a = ISBN.parse('9780758165794');
+	console.log (isbn10a);
+	
+	var queryTag = req.query.query;
+	if (!queryTag) return;
+
+	Article.find().populate('user', 'displayName').exec(function(err, articles) {
+
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+
+			var result = [];
+			var addedTages = {};
+
+			_.each (articles, function (article) {
+
+				_.each (article.tags, function (tag) {
+
+					if (!addedTages[tag.text]
+						&& 0.7 < similarity(queryTag, tag.text)) {
+						result.push(tag);
+						addedTages[tag.text] = 1;
+					} 
+				});
+			});
+
+			res.json(result);
 		}
 	});
 };

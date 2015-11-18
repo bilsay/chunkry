@@ -18,10 +18,17 @@ module.exports = function(app) {
 		.get(articles.read)
 		.put(users.requiresLogin, articles.hasAuthorization, articles.update)
 		.delete(users.requiresLogin, articles.hasAuthorization, articles.delete);
+	
+	app.route('/tags?:query')
+	   .get(articles.getTags);
+
+	//app.route('/isbn?:query')
+	  // .get(articles.queryISBN);
 
 	app.route('/sign_s3')
     	.get(users.requiresLogin, multipartyMiddleware, articles.uploadToS3);
 
 	// Finish by binding the article middleware
 	app.param('articleId', articles.articleByID);
+	app.param('query', articles.getTags);
 };

@@ -6,6 +6,7 @@
     "angular": "~1.2",
     "angular-animate": "~1.2",
     "angular-bootstrap": "~0.12.0",
+    "angular-masonry": "~0.13.0",
     "angular-mocks": "~1.2",
     "angular-resource": "~1.2",
     "angular-ui-router": "~0.2.11",
@@ -13,9 +14,20 @@
     "angular-underscore-module": "~1.0.1",
     "bootstrap": "~3",
     "bootstrap-sass-official": "~3.3.3",
+    "doc-ready": "~1.0.4",
+    "eventEmitter": "~4.3.0",
+    "eventie": "~1.0.6",
+    "fizzy-ui-utils": "~1.0.1",
+    "get-size": "~1.2.2",
+    "get-style-property": "~1.0.4",
+    "imagesloaded": "~3.1.8",
     "jquery": "~2.1.4",
+    "jquery-bridget": "~1.1.0",
+    "masonry": "~3.3.2",
     "ng-file-upload": "~7.0.17",
     "ng-file-upload-shim": "~7.0.17",
+    "ng-tags-input": "~2.0.0",
+    "outlayer": "~1.4.2",
     "underscore": "~1.8.3"
   },
   "homepage": "https://github.com/bilsay/chunkry",
@@ -34,5 +46,8 @@
   "moduleType": [
     "amd",
     "node"
-  ]
+  ],
+  "resolutions": {
+    "angular": "~1.2"
+  }
 }

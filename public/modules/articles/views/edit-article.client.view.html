@@ -5,6 +5,13 @@
 	<div class="col-md-12">
 		<form name="articleForm" class="form-horizontal" data-ng-submit="update(articleForm.$valid)" novalidate>
 			<fieldset>
+				<div class="form-group">
+					<div class="controls">
+						<label class="checkbox-inline">
+							<input type="checkbox" name="isCreatedByUser" ng-model="articleForm.isCreatedByUser"> I created this
+						</label>
+					</div>
+				</div>
 				<div class="form-group" ng-class="{ 'has-error' : submitted && articleForm.title.$invalid}">
 					<label class="control-label" for="title">Title</label>
 					<div class="controls">
@@ -28,8 +35,8 @@
 					<div class="controls">
 						<input id="articleimage" 
 							   type="file" 
-							   ngf-select="uploadImage(image)"
-							   ng-model="image" name="file" accept="image/*"  required="">
+							   ngf-select="uploadFile(image)"
+							   ng-model="image" name="file" accept="audio/*|image/*"  required="">
 						<br/>
 						<img id="chunk-image" ng-show="article.imageUrl != null" ng-src="{{article.imageUrl}}" class="img-thumbnail" height="50" width="100">
 					</div>

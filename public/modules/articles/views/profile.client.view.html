@@ -3,7 +3,7 @@
 		 data-ng-init="loadTagCloudItems()"
 		 class="col-md-2">
 
-<div>
+	<div>
 	<h3 data-ng-show="authentication.user">
 		<span data-ng-bind="authentication.user.displayName"></span>
 	</h3>
@@ -23,7 +23,7 @@
 </section>
 
 <section data-ng-controller="ArticlesController" 
-		 data-ng-init="find(tag)"
+		 data-ng-init="find(tag, user)"
 		 class="col-md-10">
 	<div>
 		<div masonry class="list-group"
@@ -32,11 +32,8 @@
 			   data-ng-href="#!/articles/{{article._id}}" 
 			   class="chunk list-group-item col-md-3 col-sm-12 masonry-brick">
 				<h4 class="list-group-item-heading" data-ng-bind="article.title"></h4>
-				<img ng-src="{{article.fileUrl}}" id="photo-id" width="40" height="40"/>
+				<img ng-src="{{article.imageUrl}}" id="photo-id" width="40" height="40"/>
 				<p class="list-group-item-text" data-ng-bind="article.content"></p>
-				<div>
-					<span data-ng-bind="article.fileTypeCategory"></span>
-				</div>
 				<small class="list-group-item-text">
 					Posted on
 					<span data-ng-bind="article.created | date:'mediumDate'"></span>

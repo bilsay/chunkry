@@ -29,9 +29,21 @@ var ArticleSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'User'
 	},
-	imageUrl: {
+	linkUrl: {
 		type: String,
 		default: ''
+	},
+	fileUrl: {
+		type: String,
+		default: ''
+	},
+	fileTypeCategory: {
+		type: String,
+		enum: ['image', 'audio']
+	},
+	isCreatedByUser: {
+		type: Boolean,
+		default: false
 	},
 	tags: []
 });
