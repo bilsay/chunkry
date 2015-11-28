@@ -1,4 +1,4 @@
-$mainBackgroundColor: #F3F3F3;
+$mainBackgroundColor: #FFFFFF;
 $mainForegroundColor: #FFFFFF;
 $menuBackground: #333;
 $mainBorderColor: #E9E9E9;
@@ -115,6 +115,15 @@ a {
 /*END OF TYPE*/
 
 /*BOOTSTRAP*/
+
+.nav-pills > li.active > a
+{
+    background: $mainColor;
+    &:hover,
+    &:focus {
+      background: #333;
+    }
+}
 
 .form-control {
 	background: $inputBackground;

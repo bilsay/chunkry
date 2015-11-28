@@ -38,7 +38,7 @@ table {
 /*END OF RESET*/
 /*CORE*/
 body {
-  background: #F3F3F3;
+  background: #FFFFFF;
   color: #666666;
   font-size: 13px; }
 
@@ -58,6 +58,11 @@ h1, h2, h3, h4, h5, h6 {
 
 /*END OF TYPE*/
 /*BOOTSTRAP*/
+.nav-pills > li.active > a {
+  background: #27ae60; }
+  .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+    background: #333; }
+
 .form-control {
   background: #222222;
   border: none;

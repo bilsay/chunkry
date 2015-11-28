@@ -1,52 +1,67 @@
-<section id="profile-info"
-		 data-ng-controller="ArticlesController" 
-		 data-ng-init="loadTagCloudItems()"
-		 class="col-md-2">
 
-<div>
-	<h3 data-ng-show="authentication.user">
-		<span data-ng-bind="authentication.user.displayName"></span>
-	</h3>
+<div id="chunk-list-options" class="col-md-12 col-sm-12">
 
-	<ul class="tag-cloud list-group">
-		<li class="tag-cloud-item" data-ng-repeat="tagCloudItem in tagCloudItems" data-weight="{{tagCloudItem[1]}}">
-			<a data-ng-href="#!/articles/tagged/?tag={{tagCloudItem[0]}}" class="chunk list-group-item">
-				{{tagCloudItem[0]}}
-			</a>
-		</li>
-	</ul>
-	<div class="alert alert-warning text-center" data-ng-if="!tagCloudItems.length">
-		has absolutely nothing on his mind, <a href="/#!/articles/create">add chunk</a>?
-	</div>
-</div>
+	<tabset>
+		<tab>
+			<tab-heading>
+			  <span>Chunks</span>
+			</tab-heading>
+			
+	<section id="chunk-feed" 
+			 data-ng-controller="ArticlesController" 
+			 data-ng-init="find(tag)"
+			 class="tab-pane in active col-md-10">
+		<div>
+			<div masonry class="list-group"
+				 data-masonry-options='{ "columnWidth": ".chunk", "itemSelector": ".chunk" }'>
+				<a data-ng-repeat="article in articles" 
+				   data-ng-href="#!/articles/{{article._id}}" 
+				   class="chunk list-group-item col-md-3 col-sm-12 masonry-brick">
+					<h4 class="list-group-item-heading" data-ng-bind="article.title"></h4>
+					<img ng-src="{{article.fileUrl}}" id="photo-id" width="40" height="40"/>
+					<p class="list-group-item-text" data-ng-bind="article.content"></p>
+					<div>
+						<span data-ng-bind="article.fileTypeCategory"></span>
+					</div>
+					<small class="list-group-item-text">
+						Posted on
+						<span data-ng-bind="article.created | date:'mediumDate'"></span>
+						by
+						<span data-ng-bind="article.user.displayName"></span>
+					</small>
+					<ol class="chunk-readonly-tags"> 
+						<li ng-repeat="tag in article.tags" class="chunk-readonly-tag">{{tag.text}}</li>
+					</ol>
+				</a>
+			</div>
+		</div>
+	</section>
+		</tab>
+		<tab heading="Self Reports">
+				<section id="profile-info"
+			 data-ng-controller="ArticlesController" 
+			 data-ng-init="loadTagCloudItems()"
+			 class="tab-pane col-md-2">
 
-</section>
-
-<section data-ng-controller="ArticlesController" 
-		 data-ng-init="find(tag)"
-		 class="col-md-10">
 	<div>
-		<div masonry class="list-group"
-			 data-masonry-options='{ "columnWidth": ".chunk", "itemSelector": ".chunk" }'>
-			<a data-ng-repeat="article in articles" 
-			   data-ng-href="#!/articles/{{article._id}}" 
-			   class="chunk list-group-item col-md-3 col-sm-12 masonry-brick">
-				<h4 class="list-group-item-heading" data-ng-bind="article.title"></h4>
-				<img ng-src="{{article.fileUrl}}" id="photo-id" width="40" height="40"/>
-				<p class="list-group-item-text" data-ng-bind="article.content"></p>
-				<div>
-					<span data-ng-bind="article.fileTypeCategory"></span>
-				</div>
-				<small class="list-group-item-text">
-					Posted on
-					<span data-ng-bind="article.created | date:'mediumDate'"></span>
-					by
-					<span data-ng-bind="article.user.displayName"></span>
-				</small>
-				<ol class="chunk-readonly-tags"> 
-					<li ng-repeat="tag in article.tags" class="chunk-readonly-tag">{{tag.text}}</li>
-				</ol>
-			</a>
+		<h3 data-ng-show="authentication.user">
+			<span data-ng-bind="authentication.user.displayName"></span>
+		</h3>
+
+		<ul class="tag-cloud list-group">
+			<li class="tag-cloud-item" data-ng-repeat="tagCloudItem in tagCloudItems" data-weight="{{tagCloudItem[1]}}">
+				<a data-ng-href="#!/articles/tagged/?tag={{tagCloudItem[0]}}" class="chunk list-group-item">
+					{{tagCloudItem[0]}}
+				</a>
+			</li>
+		</ul>
+		<div class="alert alert-warning text-center" data-ng-if="!tagCloudItems.length">
+			has absolutely nothing on his mind, <a href="/#!/articles/create">add chunk</a>?
 		</div>
 	</div>
-</section>
+
+	</section>
+
+		</tab>
+	</tabset>
+</div>
