@@ -80,7 +80,8 @@ module.exports = {
 	            //'public/lib/masonry-layout/masonry.js',
 	            //'public/lib/masonry-layout/dist/masonry.pkgd.min.js',
 	            'public/lib/angular-masonry/angular-masonry.js',
-	            'public/lib/d3/d3.min.js'
+	            'public/lib/d3/d3.min.js',
+	            'public/lib/simpleWeather/simpleweather.jquery.min.js'
 			]
 		},
 		css: [
