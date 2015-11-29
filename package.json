@@ -37,7 +37,6 @@
     "grunt-cli": "~0.1.13",
     "grunt-contrib-sass": "^0.9.2",
     "helmet": "~0.5.0",
-    "isbn": "^0.2.0",
     "jquery-bridget": "^1.1.0",
     "leven": "^2.0.0",
     "lodash": "~2.4.1",
