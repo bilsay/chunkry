@@ -14,11 +14,6 @@ var mongoose = require('mongoose'),
     similarity = require("similarity"),
     ISBN = require('isbn').ISBN;
 
-	var AWS_ACCESS_KEY = "AKIAJCAFEOUECYVL6UZA";//process.env.AWS_ACCESS_KEY;
-	var AWS_SECRET_KEY = "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";//process.env.AWS_SECRET_KEY;
-	var S3_BUCKET = "chunkry";//process.env.S3_BUCKET;
-	var S3_URL = "https://s3-eu-west-1.amazonaws.com";//process.env.S3_URL;
-
 /**
  * Create a article with Upload
  */
